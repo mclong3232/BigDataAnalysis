@@ -4,6 +4,7 @@ import Node
 import MySQLdb
 import os
 import glob
+import csv
 import pandas as pd
 
 
@@ -46,11 +47,15 @@ class MyDatabase:
     @staticmethod
     def add_data(filename):
         # Extract the base name of the dataset
-        csv = os.path.basename(filename)
-        name = os.path.splitext(os.path.split(csv)[1])[0]
+        csvname = os.path.basename(filename)
+        name = os.path.splitext(os.path.split(csvname)[1])[0]
 
         dataset = Node.Node(name)
-        print dataset.get_name()
+
+        with open(csvname, 'rb') as csvfile:
+            spamreader = csv.reader(csvfile)
+            for row in spamreader:
+                print ', '.join(row)
 
     def add_row(self, table, id_, value):
         """Adds a row into the specified table.
