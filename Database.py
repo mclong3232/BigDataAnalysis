@@ -1,5 +1,7 @@
 # Module:  Database.py
 import MySQLdb
+import os
+import glob
 import pandas as pd
 
 
@@ -18,6 +20,13 @@ class MyDatabase:
                                         passwd=password,  # your password
                                         db=db)  # name of the data base
         self.mysql = self.dtb_obj.cursor(MySQLdb.cursors.DictCursor)
+
+    @staticmethod
+    def get_files():
+        # Choose the path to pull files from
+        path = os.getcwd()
+
+        return glob.glob(path + "/*.csv")
 
     def add_table(self, db, table):
         """Adds a table into the specified schema of a MySQL database.
