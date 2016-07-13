@@ -1,4 +1,6 @@
 # Module:  Database.py
+import Node
+
 import MySQLdb
 import os
 import glob
@@ -40,6 +42,15 @@ class MyDatabase:
                PRIMARY KEY (`id`, `value`));"""
         comm = comm.format(db=db, table=table)
         self.mysql.execute(comm)
+
+    @staticmethod
+    def add_data(filename):
+        # Extract the base name of the dataset
+        csv = os.path.basename(filename)
+        name = os.path.splitext(os.path.split(csv)[1])[0]
+
+        dataset = Node.Node(name)
+        print dataset.get_name()
 
     def add_row(self, table, id_, value):
         """Adds a row into the specified table.

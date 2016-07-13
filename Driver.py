@@ -5,7 +5,7 @@ More details.
 """
 # !/usr/bin/env python
 import Database
-import Statistics
+# import Statistics
 # import Initializer
 # import test_dakota
 import Graphics
@@ -17,7 +17,8 @@ password = raw_input("Password:  ")
 dataB = Database.MyDatabase("localhost", username, password, "signal_intensity")
 
 files = dataB.get_files()
-print files
+for f in files:
+    dataB.add_data(f)
 
 # dataB.mysql.execute("DROP DATABASE `signal_intensity`;")
 # dataB.mysql.execute("CREATE SCHEMA `signal_intensity` DEFAULT CHARACTER SET utf8 ;")
