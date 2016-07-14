@@ -4,10 +4,10 @@
 class Node(object):
     """ Definition and methods for a node data structure"""
 
-    def __init__(self, name=None, next_node=None):
+    def __init__(self, name=None, id=None, val=None, next_node=None):
         self.name = name
-        self.idList = []
-        self.valList = []
+        self.idList = id
+        self.valList = val
         self.next_node = next_node
 
     def get_name(self):
