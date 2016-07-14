@@ -54,7 +54,7 @@ class MyDatabase:
         self.mysql.execute(comm)
 
     @staticmethod
-    def add_data(datab, name):
+    def add_data(self, name):
         idlist = []
         vallist = []
 
@@ -66,11 +66,11 @@ class MyDatabase:
 
         dataset = Node.Node(name=name, id=idlist, val=vallist)
 
-        datab.add_table("signal_intensity", dataset.name)
+        self.add_table("signal_intensity", dataset.name)
 
         i = 0
         while i < len(dataset.idList):
-            datab.add_row(dataset.name, dataset.idList[i], dataset.valList[i])
+            self.add_row(dataset.name, dataset.idList[i], dataset.valList[i])
             i += 1
 
     def add_row(self, table, id_, value):
