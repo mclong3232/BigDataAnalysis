@@ -26,10 +26,20 @@ class MyDatabase:
 
     @staticmethod
     def get_files():
+        name_list = []
+
         # Choose the path to pull files from
         path = os.getcwd()
 
-        return glob.glob(path + "/*.csv")
+        files = glob.glob(path + "/*.csv")
+
+        for f in files:
+            # Extract the base name of the dataset
+            csvname = os.path.basename(f)
+            name = os.path.splitext(os.path.split(csvname)[1])[0]
+            name_list.append(name)
+
+        return name_list
 
     def add_table(self, db, table):
         """Adds a table into the specified schema of a MySQL database.
@@ -45,15 +55,11 @@ class MyDatabase:
         self.mysql.execute(comm)
 
     @staticmethod
-    def add_data(datab, filename):
-        # Extract the base name of the dataset
-        csvname = os.path.basename(filename)
-        name = os.path.splitext(os.path.split(csvname)[1])[0]
-
+    def add_data(datab, name):
         idlist = []
         vallist = []
 
-        with open(csvname, 'rb') as csvfile:
+        with open(name + '.csv', 'rb') as csvfile:
             reader = csv.reader(csvfile)
             for row in reader:
                 idlist.append(float(row[0]))
