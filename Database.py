@@ -1,6 +1,5 @@
 # Module:  Database.py
 import Node
-
 import MySQLdb
 import os
 import glob
