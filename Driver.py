@@ -80,3 +80,6 @@ if disp_graph == "Y":
     print "Testis_E_Exposed_rep2"
     dataset = dataB.get_set("GSM576105")
     Graphics.display_graphics(dataset)
+
+# Commit changes to database
+dataB.comm_exit()
