@@ -45,17 +45,28 @@ class MyDatabase:
         self.mysql.execute(comm)
 
     @staticmethod
-    def add_data(filename):
+    def add_data(datab, filename):
         # Extract the base name of the dataset
         csvname = os.path.basename(filename)
         name = os.path.splitext(os.path.split(csvname)[1])[0]
 
-        dataset = Node.Node(name)
+        idlist = []
+        vallist = []
 
         with open(csvname, 'rb') as csvfile:
-            spamreader = csv.reader(csvfile)
-            for row in spamreader:
-                print ', '.join(row)
+            reader = csv.reader(csvfile)
+            for row in reader:
+                idlist.append(float(row[0]))
+                vallist.append(float(row[1]))
+
+        dataset = Node.Node(name=name, id=idlist, val=vallist)
+
+        datab.add_table("signal_intensity", dataset.name)
+
+        i = 0
+        while i < len(dataset.idList):
+            datab.add_row(dataset.name, dataset.idList[i], dataset.valList[i])
+            i += 1
 
     def add_row(self, table, id_, value):
         """Adds a row into the specified table.
