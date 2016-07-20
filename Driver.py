@@ -7,7 +7,7 @@ More details.
 import Database
 # import Statistics
 # import Initializer
-# import test_dakota
+import dakota
 import Graphics
 
 
@@ -33,10 +33,7 @@ else:
 
 # Statistics.anova()
 
-# x = test_dakota.TestDriver()
-# x.run()
-
-# dakota_driver.driver.run_dakota(infile="test.in")
+dakota.run_dakota(infile="rosen_uq_sc.in")
 
 disp_graph = raw_input("Display graphs? (Y/n)  ")
 
