@@ -33,7 +33,7 @@ else:
 
 # Statistics.anova()
 
-dakota.run_dakota(infile="rosen_uq_sc.in")
+dakota.run_dakota(infile="dakota.in")
 
 disp_graph = raw_input("Display graphs? (Y/n)  ")
 
