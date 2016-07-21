@@ -1,4 +1,6 @@
 # Module:  Analysis.py
+
+import DakotaFileIO
 import pickle
 import dakota
 import pandas as pd
@@ -26,4 +28,6 @@ def anova():
 
 
 def uq():
-    dakota.run_dakota(infile="dakota.in", stdout="dakota_results.out", stderr="dakota_results.err")
+    name = DakotaFileIO.make_file()
+    dakota.run_dakota(infile=name, stdout="dakota_results.out", stderr="dakota_results.err")
+    return DakotaFileIO.read_file()
