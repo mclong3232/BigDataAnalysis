@@ -5,10 +5,9 @@ More details.
 """
 # !/usr/bin/env python
 import Database
-# import Statistics
-# import Initializer
-import dakota
+import Analysis
 import Graphics
+# import Initializer
 
 
 # Initializes connection to MySQL database and application window.
@@ -39,7 +38,7 @@ else:
 
 
 # Run DAKOTA
-dakota.run_dakota(infile="dakota.in", stdout="dakota_results.out", stderr="dakota_results.err")
+Analysis.uq()
 
 
 # Graph the data sets

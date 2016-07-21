@@ -1,6 +1,6 @@
-# Module:  Statistics.py
+# Module:  Analysis.py
 import pickle
-
+import dakota
 import pandas as pd
 from scipy import stats
 
@@ -23,3 +23,7 @@ def anova():
     f_val, p_val = stats.f_oneway(*df_list)
 
     print "One-way ANOVA p-value = ", p_val[0]
+
+
+def uq():
+    dakota.run_dakota(infile="dakota.in", stdout="dakota_results.out", stderr="dakota_results.err")
