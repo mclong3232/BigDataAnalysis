@@ -1,4 +1,8 @@
-# Module:  Database.py
+"""
+@package Database.py
+Handles all database functionality of the program.
+"""
+
 import Node
 import MySQLdb
 import os
@@ -8,12 +12,22 @@ import pandas as pd
 
 
 class MyDatabase:
-    """Definitions and methods for a database connection"""
+    """
+    Definitions and methods for a database connection
+    """
 
     def __init__(self, host, user, password, db):
-        """Initialize a MySQL database connection.
+        """
+            Initialize a MySQL database connection.
 
-        Receives host, user, password, and name of database to connect to.
+            Args:
+                host        :string:  hostname to login to MySQL database
+                user        :string:  username to login to MySQL database
+                password    :string:  password to login to MySQL database
+                db          :string:  schema to connect to in MySQL database
+
+            Returns:
+                N/A
         """
 
         self.dtb = MySQLdb
@@ -25,6 +39,17 @@ class MyDatabase:
 
     @staticmethod
     def get_files():
+        """
+            Collects all of the file names that end in .csv into a list
+            that are in the current working directory
+
+            Args:
+                N/A
+
+            Returns:
+                name_list   :List:  list of .csv file names
+        """
+
         name_list = []
 
         # Choose the path to pull files from
@@ -41,20 +66,40 @@ class MyDatabase:
         return name_list
 
     def add_table(self, db, table):
-        """Adds a table into the specified schema of a MySQL database.
+        """
+            Adds a table into the specified schema of a MySQL database.
 
-        Receives the name of the schema and the name of the table.
+            Args:
+                db      :string:    schema to be accessed
+                table   :string:    name of the new table
+
+            Returns:
+                N/A
         """
 
         comm = """CREATE TABLE `{db}`.`{table}` (
                `id` INT NOT NULL,
                `value` FLOAT NOT NULL,
                PRIMARY KEY (`id`, `value`));"""
+
         comm = comm.format(db=db, table=table)
         self.mysql.execute(comm)
 
-    @staticmethod
-    def add_data(self, name):
+    def add_data(self, db, name):
+        """
+            Adds a .csv dataset into specified schema
+
+            Accepts the name of the dataset and searches for it in
+            a list of .csv datasets
+
+            Args:
+                db      :string:    name of schema to be accessed
+                name    :string:    name of dataset to be added
+
+            Returns:
+                N/A
+        """
+
         idlist = []
         vallist = []
 
@@ -64,9 +109,9 @@ class MyDatabase:
                 idlist.append(float(row[0]))
                 vallist.append(float(row[1]))
 
-        dataset = Node.Node(name=name, id=idlist, val=vallist)
+        dataset = Node.Node(name=name, id_=idlist, val=vallist)
 
-        self.add_table("signal_intensity", dataset.name)
+        self.add_table(db, dataset.name)
 
         i = 0
         while i < len(dataset.idList):
@@ -74,9 +119,16 @@ class MyDatabase:
             i += 1
 
     def add_row(self, table, id_, value):
-        """Adds a row into the specified table.
+        """
+            Adds a row into the specified table.
 
-        Receives the name of the table, and the values to be added.
+            Args:
+                table   :string:    name of the table to be accessed
+                id_     :int:       value of the id_ to be added
+                value   :int:       value of the value to be added
+
+            Returns:
+                N/A
         """
 
         comm = "INSERT INTO `{table}` () " \
@@ -85,9 +137,16 @@ class MyDatabase:
         self.mysql.execute(comm)
 
     def del_row(self, table, name, limit):
-        """Deletes a row from the specified table.
+        """
+            Deletes a row from the specified table.
 
-        Receives the name of the table and the name and limit of the deletion.
+            Args:
+                table   :string:    identifies which table will be accessed
+                name    :string:    identifies which row to be deleted
+                limit   :string:    limit the amount of deletions
+
+            Returns:
+                N/A
         """
 
         comm = "DELETE FROM {table} WHERE name = '{name}' LIMIT {limit}"
@@ -96,9 +155,15 @@ class MyDatabase:
         self.mysql.execute(comm)
 
     def get_row(self, table, name):
-        """Gets the values of a row from the specified table and name.
+        """
+            Gets the values of a row from the specified table and name.
 
-        Receives the name of the table and the named to search for.
+            Args:
+                table   :string:    identifies which table will be accessed
+                name    :string:    identifies which row will be accessed
+
+            Returns:
+                row     :string:    value of the row requested by function
         """
 
         comm = "SELECT id FROM {table} WHERE name = {name}"
@@ -110,9 +175,14 @@ class MyDatabase:
         return row
 
     def get_set(self, table):
-        """Gets the values of a row from the specified table and name.
+        """
+            Gets the values of a table from the specified table name.
 
-        Receives the name of the table and the named to search for.
+            Args:
+                table   :string:    identifies which table will be accessed
+
+            Returns:
+                pd.DataFrame(dictionary):   returns a whole table
         """
 
         comm = "SELECT id, value FROM {table}"
@@ -136,20 +206,26 @@ class MyDatabase:
         return pd.DataFrame(dictionary)
 
     def get_path(self):
-        """Gets the goods, a.k.a. the absolute file path of a dataset."""
+        """
+        Gets the goods, a.k.a. the absolute file path of a dataset.
+        """
 
         comm = "SELECT id FROM {table} WHERE name = {name}"
 
         self.mysql.execute(comm)
 
     def comm_exit(self):
-        """Commits the changes to the database and exits."""
+        """
+        Commits the changes to the database and exits.
+        """
 
         self.dtb_obj.commit()
         self.dtb_obj.close()
 
     def no_comm_exit(self):
-        """Doesn't commit the changes to the database and exits."""
+        """
+        Doesn't commit the changes to the database and exits.
+        """
 
         self.dtb_obj.rollback()
         self.dtb_obj.close()

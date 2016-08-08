@@ -1,16 +1,17 @@
-"""@package docstring
-Documentation for this module
-
-More details.
 """
+@package Driver.py
+The driver module for the entire program.
+"""
+
 # !/usr/bin/env python
 import Database
-import Analysis
-import Graphics
+# import Graphics
+# import Analysis
 # import Initializer
 
 
-# Initializes connection to MySQL database and application window.
+# Initializes connection to MySQL database
+print "Logging into database..."
 username = raw_input("Username:  ")
 password = raw_input("Password:  ")
 dataB = Database.MyDatabase("localhost", username, password, "signal_intensity")
@@ -23,6 +24,7 @@ dataB = Database.MyDatabase("localhost", username, password, "signal_intensity")
 
 
 # Get a list of all files that could be added to database
+# Searches within the current working directory
 files = dataB.get_files()
 
 targetfile = raw_input("Which dataset to add:  ")
@@ -38,14 +40,7 @@ else:
 
 
 # Run DAKOTA
-Analysis.uq()
-
-
-# Graph the data sets
-disp_graph = raw_input("Display graphs? (Y/n)  ")
-
-if disp_graph == "Y":
-    Graphics.graph_sets(dataB)
+# Analysis.uq()
 
 
 # Commit changes to database

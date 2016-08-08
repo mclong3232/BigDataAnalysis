@@ -1,4 +1,7 @@
-# Module:  Initializer.py
+"""
+@package Initializer.py
+Initializes a database and the extraction of data from the .soft biological dataset.
+"""
 import Node
 import LinkedList
 
@@ -12,7 +15,15 @@ from itertools import izip
 
 
 def init(datab):
-    """Initializes a database and loads all the datasets into it."""
+    """
+        Initializes a database and loads all the datasets into it.
+
+        Args:
+            datab   :Database:  a database object, as defined in "Database.py"
+
+        Returns:
+            N/A
+    """
 
     try:
         # Try to open the pickle first

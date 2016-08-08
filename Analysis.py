@@ -1,4 +1,7 @@
-# Module:  Analysis.py
+"""
+@package Analysis.py
+Handles the analysis functions of the program.
+"""
 
 import DakotaFileIO
 import pickle
@@ -8,6 +11,16 @@ from scipy import stats
 
 
 def anova():
+    """
+        Performs an analysis of variance of a dataset
+
+        Args:
+            N/A
+
+        Returns:
+            N/A
+    """
+
     infile = open("dataSets.pkl", 'r')
     datasets = pickle.load(infile)
 
@@ -28,6 +41,16 @@ def anova():
 
 
 def uq():
+    """
+        Performs an uncertainty quantification analysis on the data using Dakota
+
+        Args:
+            N/A
+
+        Returns:
+            N/A (WIP:  function not finished)
+    """
+
     name = DakotaFileIO.make_file()
     dakota.run_dakota(infile=name, stdout="dakota_results.out", stderr="dakota_results.err")
     return DakotaFileIO.read_file()

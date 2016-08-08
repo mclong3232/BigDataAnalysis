@@ -1,8 +1,22 @@
-# Module:  DakotaFileIO.py
+"""
+@package DakotaFileIO.py
+Handles the Dakota file operations.
+"""
+
 import dakota
 
 
 def make_file():
+    """
+    Creates a Dakota input file (e.g.: file_name.in)
+
+    Args:
+        N/A
+
+    Returns:
+        name    :string:  The name of the Dakota input file.
+    """
+
     # Create a DAKOTA input file
     name = "uq.in"
     dak = dakota.DakotaInput(environment=["tabular_data",
@@ -37,5 +51,14 @@ def make_file():
 
 
 def read_file():
-    # Stuff
-    print "lol"
+    """
+    Parse the output file from Dakota for results.
+
+    Args:
+        N/A
+
+    Returns:
+        N/A
+    """
+
+    print "***WIP***"
